@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="corporate">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Myrtille</title>
+        <link rel="stylesheet" href="/build.css">
+        <link rel="icon" href="/fetus.png">
+    </head>
+    <body class="min-h-screen">
+        <div class="hero min-h-screen">
+            <div class="hero-content text-center">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-6xl sm:text-8xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-secondary to-primary font-extrabold p-4 sm:p-6">Myrtille is coming in</h1>
+                    <div class="grid auto-cols-max grid-flow-col gap-5 text-center">
+                         <div class="bg-neutral rounded-box text-neutral-content flex flex-col p-2">
+                            <span class="countdown font-mono text-5xl">
+                                <span id="weeks" style="--value:00;" aria-live="polite" aria-label="00">00</span>
+                            </span>
+                           weeks 
+                        </div>
+                        <div class="bg-neutral rounded-box text-neutral-content flex flex-col p-2">
+                            <span class="countdown font-mono text-5xl">
+                                <span id="days" style="--value:00;" aria-live="polite" aria-label="00">00</span>
+                            </span>
+                            days
+                        </div>
+                        <div class="bg-neutral rounded-box text-neutral-content flex flex-col p-2">
+                            <span class="countdown font-mono text-5xl">
+                                <span id="hours" style="--value:00;" aria-live="polite" aria-label="00">00</span>
+                            </span>
+                            hours
+                        </div>
+                        <div class="bg-neutral rounded-box text-neutral-content flex flex-col p-2">
+                            <span class="countdown font-mono text-5xl">
+                                <span id="minutes" style="--value:00;" aria-live="polite" aria-label="00">00</span>
+                            </span>
+                            min
+                        </div>
+                        <div class="bg-neutral rounded-box text-neutral-content flex flex-col p-2">
+                            <span class="countdown font-mono text-5xl">
+                                <span id="seconds" style="--value:00;" aria-live="polite" aria-label="00">00</span>
+                            </span>
+                            sec
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        let dueDate = 1775512800; // 7 April 2026
+        setInterval(() => {
+            let now = Math.floor(Date.now() / 1000);
+            let remaining = dueDate - now;
+            let weeks = Math.floor(remaining / (86400 * 7) );
+            remaining -= weeks * 86400 * 7
+            document.getElementById('weeks').style.setProperty('--value', weeks)
+            let days = Math.floor(remaining / (86400) );
+            remaining -= days * 86400
+            document.getElementById('days').style.setProperty('--value', days)
+            let hours = Math.floor(remaining / 3600);
+            remaining -= hours * 3600;
+            document.getElementById('hours').style.setProperty('--value', hours)
+            let minutes = Math.floor(remaining / 60);
+            remaining -= minutes * 60;
+            document.getElementById('minutes').style.setProperty('--value', minutes)
+            document.getElementById('seconds').style.setProperty('--value', remaining)
+            if (remaining % 3 === 0){
+                theme = themes[Math.floor(Math.random() * themes.length)];
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+        }, 1000)
+
+        let themes = ["light", "cupcake", "bumblebee", "emerald", "corporate", "valentine", "garden", "lofi", "pastel", "fantasy", "autumn", "halloween", "dark", "dracula", "forest", "aqua", "cmyk", "coffee", "winter", "sunset", "caramellatte", "abyss", "dim", "lemonade", "silk"];
+        let params = new URLSearchParams(document.location.search);
+        let theme = params.get("theme");
+        if (theme === null){
+            theme = themes[Math.floor(Math.random() * themes.length)];
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+</html>
